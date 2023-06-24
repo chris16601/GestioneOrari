@@ -1,0 +1,76 @@
+.btn.btn-primary.m-4{
+    background-color:#D2691E;
+    color: #202124;
+    border: none;
+}
+
+.btn.btn-primary{
+    background-color:#D2691E;
+    color: #202124;
+    border: none;
+}
+
+.btn.btn-primary.m-4:hover{
+    background-color: #f19a5b !important;
+}
+
+.btn.btn-primary:hover{
+    background-color: #f19a5b !important;
+}
+
+.btn-check:focus + .btn, .btn:focus {
+    color: #D2691E !important;
+    background-color: #D2691E !important;
+    border-color: #D2691E !important;
+    outline: 0;
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+
+div.dataTables_wrapper div.dataTables_info {
+    color: white;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    color: white !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    font-weight: normal;
+    padding-bottom: .60em !important;
+    white-space: nowrap;
+    text-align: left;
+    color: white !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+
+    padding-bottom: .60em !important;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+
+.active > .page-link, .page-link.active {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: #D2691E !important;
+    border-color: #202124 !important;
+  }
+
+label {
+    color: white !important;
+}
+
+.form-control:focus {
+    border-color: #D2691E !important;
+}
+
+#filtri_all {
+    display: flex;
+  }
+
+#filtri_all input {
+    margin-right: 10px;
+}
