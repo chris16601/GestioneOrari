@@ -1,0 +1,24 @@
+.card {
+    display: flex;
+    justify-content: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    background-color: #202124;
+    border: 0.09cm solid;
+    border-radius: 30px;
+    border-color: #D2691E;
+}
+
+h2 {
+    color: #D2691E !important;
+}
+
+
+label {
+    margin-right: 5px;
+    margin-left: 5px;
+    color: #D2691E !important;
+}
+
+

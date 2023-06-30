@@ -30,3 +30,6 @@ Route::post('/save-orario', [OrarioController::class, 'saveOrario'])->name('orar
 Route::get('/delete-hour/{id}', [OrarioController::class, 'deleteOrario'])->name('orario.deleteHour');
 Route::get('edit-hour/{id}', [OrarioController::class, 'editHour'])->name('orario.editHour');
 Route::post('edit-hour-save', [OrarioController::class, 'editHourSave'])->name('orario.edit.save');
+
+//Contact Us
+Route::view('/contact-us', 'page.contact');

@@ -20,13 +20,13 @@
             <div id="filtri_all" class="container">
                 <!-- Add Button -->
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-primary m-5" data-bs-toggle="modal" data-bs-target="#aggiungi">
+                    <button type="button" id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungi" style="margin-top: 53px">
                         <i class="fa-solid fa-plus" style="color: #202124;"></i>
                     </button>
                 </div>
                 <!-- Month Filter -->
                 <div class="col-md-2" style="margin:34px;">
-                    <label for="mesi_filtro">FILTRO MESE</label>
+                    <label id="label_mesi" for="mesi_filtro">FILTRO MESE</label>
                     <select id="mesi_filtro" class="form-control">
                         @foreach($mesi as $mese)
                             <option value="{{ $mese->id_mese }}">{{ $mese->descrizione }}</option>
@@ -35,7 +35,7 @@
                 </div>
                 <!-- Year Filter -->
                 <div class="col-md-2" style="margin:34px;">
-                    <label for="anni_filtro">FILTRO ANNO</label>
+                    <label id="label_anni" for="anni_filtro">FILTRO ANNO</label>
                     <select id="anni_filtro" class="form-control">
                         @foreach($anni as $anno)
                             <option value="{{ $anno->year }}">{{ $anno->year }}</option>
@@ -82,9 +82,7 @@
     </div>
 </div>
 </body>
-
-
-
+@include('layouts.footer')
 
 <script>
     $(document).ready( function () {

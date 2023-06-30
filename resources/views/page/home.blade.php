@@ -19,3 +19,6 @@
 {{ $chart->script() }}
 </body>
 </html>
+
+@include('layouts.footer')
+
