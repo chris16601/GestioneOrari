@@ -23,11 +23,11 @@
         <td>{{ $mese }}/{{ $anno }}</td>
     </tr>
 	<tr>
-		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>DATA</b></td>
-		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>DA ORA</b></td>
-		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>A ORA</b></td>
-		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>ORE FATTE</b></td>
-        <td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>TIPO GIORNATA</b></td>
+		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>Data</b></td>
+		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>Ora inizio</b></td>
+		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>Ora fine</b></td>
+		<td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>Ore fatte</b></td>
+        <td style="background-color: #eeece1; border: 1px solid #C0C0C0; text-align: center"><b>Tipo giornata</b></td>
 	</tr>
 
     @foreach($orario as $ora)
@@ -41,7 +41,7 @@
 
     @endforeach
     <tr>
-        <td style="text-align: center"><b>Ore Totali Fatte: {{ $sum }}, Giorni di Ferie: {{ $ferie }}</b></td>
+        <td colspan="5" style="text-align: center"><b>Ore Totali Lavorative: {{ $sum }}, Giorni di Ferie: {{ $ferie }}</b></td>
     </tr>
 </table>
 </html>

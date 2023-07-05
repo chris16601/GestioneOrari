@@ -4,14 +4,9 @@
 
     <div class="alert alert-danger">{{ $success }}</div>
 @endif
-
-<!-- Button trigger modal -->
-<div  class="container">
-
-</div>
-
-
-
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dropdownButton.css') }}">
+</head>
 
 <body>
 <div>
@@ -27,7 +22,7 @@
                 <!-- Month Filter -->
                 <div class="col-md-2" style="margin:34px;">
                     <label id="label_mesi" for="mesi_filtro">FILTRO MESE</label>
-                    <select id="mesi_filtro" class="form-control" onchange="updateUrl()">
+                    <select id="mesi_filtro" class="form-control" onchange="updateUrlExcel(), updateUrlPdf()">
                         @foreach($mesi as $mese)
                             <option value="{{ $mese->id_mese }}">{{ $mese->descrizione }}</option>
                         @endforeach
@@ -36,7 +31,7 @@
                 <!-- Year Filter -->
                 <div class="col-md-2" style="margin:34px;">
                     <label id="label_anni" for="anni_filtro">FILTRO ANNO</label>
-                    <select id="anni_filtro" class="form-control" onchange="updateUrl()">
+                    <select id="anni_filtro" class="form-control" onchange="updateUrlExcel(), updateUrlPdf()">
                         @foreach($anni as $anno)
                             <option value="{{ $anno->year }}">{{ $anno->year }}</option>
                         @endforeach
@@ -44,12 +39,15 @@
                 </div>
                 <!-- Excel Download -->
                 <div class="col-md-2" style="margin-left: 300px">
-                    <a id="excel_button" name="excel_button" href="">
-                        <button type="button" class="btn btn-primary m-5">
-                            <i class="fa-solid fa-file-excel" style="color: #202124;"> Download Excel</i>
-                        </button>
-                    </a>
+                    <div class="dropdown">
+                        <button class="mainmenubtn btn btn-primary"><i class="fa-solid fa-cloud-arrow-down"> DOWNLOAD</i></button>
+                        <div class="dropdown-child">
+                            <a id="excel_button" href=""><i class="fa-solid fa-file-excel" style="color:#D2691E"> EXCEL</i></a>
+                            <a id="pdf_button" href=""><i class="fa-solid fa-file-pdf"  style="color:#D2691E"> PDF</i></a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <thead style="background-color: #D2691E;">
                 <tr>
@@ -85,13 +83,26 @@
 
 <script>
 
-        function updateUrl(){
+        function updateUrlExcel(){
             var mese = $('#mesi_filtro').val();
             var anno = $('#anni_filtro').val();
 
-            console.log(mese);
-            console.log(anno);
+            //console.log(mese);
+            //console.log(anno);
             var excel = document.getElementById("excel_button");
+            excel.href = '/export-orario-excel/' + mese + '/' + anno;
+
+            console.log(excel.href);
+
+        }
+
+        function updateUrlPdf(){
+            var mese = $('#mesi_filtro').val();
+            var anno = $('#anni_filtro').val();
+
+            //console.log(mese);
+            //console.log(anno);
+            var excel = document.getElementById("pdf_button");
             excel.href = '/export-orario/' + mese + '/' + anno;
 
             console.log(excel.href);
@@ -203,3 +214,15 @@
 @if(isset($openModal))
     @include('modal.edit_modal')
 @endif
+
+
+
+
+
+
+
+<!--<a id="excel_button" name="excel_button" href="">
+                                    <button type="button" class="btn btn-primary m-5">
+                                        <i class="fa-solid fa-file-excel" style="color: #202124;"> Download </i>
+                                    </button>
+                            </a>-->

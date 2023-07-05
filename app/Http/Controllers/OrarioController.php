@@ -13,6 +13,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class OrarioController extends Controller
 {
@@ -161,9 +162,55 @@ class OrarioController extends Controller
 
     }
 
-    public function exportExcel($mese, $anno) {
-        return Excel::download(new OrarioExport($mese, $anno), 'prova.xlsx');
+    public function exportPdf($mese, $anno) {
+        //$excel = Excel::download(new OrarioExport($mese, $anno), 'prova.xlsx');
 
+        $orario = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                            ->whereMonth('data_giornata', '=', $mese)
+                                            ->whereYear('data_giornata', '=', $anno)
+                                            ->get();
+
+        $sum = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                        ->whereMonth('data_giornata', '=', $mese)
+                                        ->whereYear('data_giornata', '=', $anno)
+                                        ->sum('ore_fatte');
+
+        $ferie = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                        ->whereMonth('data_giornata', '=', $mese)
+                                        ->whereYear('data_giornata', '=', $anno)
+                                        ->where('id_tipo_Giornata', '=', 1)
+                                        ->count();
+
+        $data = [
+            'orario' => $orario,
+            'sum' => $sum,
+            'ferie' => $ferie,
+            'mese' => $mese,
+            'anno' => $anno,
+        ];
+        $pdf = PDF::loadView('page.orarioExport', $data);
+
+        return $pdf->stream($mese . '/' . $anno . '.pdf');
+    }
+
+    public function exportExcel($mese, $anno){
+        $orario = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                            ->whereMonth('data_giornata', '=', $mese)
+                                            ->whereYear('data_giornata', '=', $anno)
+                                            ->get();
+
+        $sum = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                        ->whereMonth('data_giornata', '=', $mese)
+                                        ->whereYear('data_giornata', '=', $anno)
+                                        ->sum('ore_fatte');
+
+        $ferie = tc_giornataLavorativa::orderBy('data_giornata', 'DESC')
+                                        ->whereMonth('data_giornata', '=', $mese)
+                                        ->whereYear('data_giornata', '=', $anno)
+                                        ->where('id_tipo_Giornata', '=', 1)
+                                        ->count();
+
+        return Excel::download(new OrarioExport($mese, $anno), 'prova.xlsx');
     }
 
 

@@ -7,12 +7,14 @@
     "require": {
         "php": "^8.0",
         "arielmejiadev/larapex-charts": "^5.2",
+        "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "maatwebsite/excel": "^3.1",
+        "nahidulhasan/html2pdf": "^1.4",
         "yajra/laravel-datatables-oracle": "^10.4"
     },
     "require-dev": {

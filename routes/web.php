@@ -31,7 +31,8 @@ Route::group(['middleare' => ['auth', 'checkBanned']], function() {
     Route::get('/delete-hour/{id}', [OrarioController::class, 'deleteOrario'])->name('orario.deleteHour');
     Route::get('edit-hour/{id}', [OrarioController::class, 'editHour'])->name('orario.editHour');
     Route::post('edit-hour-save', [OrarioController::class, 'editHourSave'])->name('orario.edit.save');
-    Route::get('/export-orario/{mese}/{anno}', [OrarioController::class, 'exportExcel']);
+    Route::get('/export-orario/{mese}/{anno}', [OrarioController::class, 'exportPdf']);
+    Route::get('/export-orario-excel/{mese}/{anno}', [OrarioController::class, 'exportExcel']);
 
     //Contact Us
     Route::view('/contact-us', 'page.contact');
