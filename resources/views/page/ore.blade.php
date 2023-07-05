@@ -27,7 +27,7 @@
                 <!-- Month Filter -->
                 <div class="col-md-2" style="margin:34px;">
                     <label id="label_mesi" for="mesi_filtro">FILTRO MESE</label>
-                    <select id="mesi_filtro" class="form-control">
+                    <select id="mesi_filtro" class="form-control" onchange="updateUrl()">
                         @foreach($mesi as $mese)
                             <option value="{{ $mese->id_mese }}">{{ $mese->descrizione }}</option>
                         @endforeach
@@ -36,32 +36,31 @@
                 <!-- Year Filter -->
                 <div class="col-md-2" style="margin:34px;">
                     <label id="label_anni" for="anni_filtro">FILTRO ANNO</label>
-                    <select id="anni_filtro" class="form-control">
+                    <select id="anni_filtro" class="form-control" onchange="updateUrl()">
                         @foreach($anni as $anno)
                             <option value="{{ $anno->year }}">{{ $anno->year }}</option>
                         @endforeach
                     </select>
                 </div>
                 <!-- Excel Download -->
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-1">
-                </div>
-                <!--<div class="col-md-2">
-                        <button type="button" class="btn btn-primary m-5" data-bs-toggle="modal" data-bs-target="#aggiungi">
-                            <i class="fa-solid fa-file-excel" style="color: #202124; float:inline-end"> Excel</i>
+                <div class="col-md-2" style="margin-left: 300px">
+                    <a id="excel_button" name="excel_button" href="">
+                        <button type="button" class="btn btn-primary m-5">
+                            <i class="fa-solid fa-file-excel" style="color: #202124;"> Download Excel</i>
                         </button>
-                    </div>-->
+                    </a>
+                </div>
             </div>
             <thead style="background-color: #D2691E;">
                 <tr>
-                    <th style="color: #202124;"></th>
+                    <th colspan='1' style="color: #202124;"></th>
                     <th style="color: #202124;">DATA</th>
                     <th style="color: #202124;">DA ORA</th>
                     <th style="color: #202124;">A ORA</th>
                     <th style="color: #202124;">ORE FATTE</th>
                     <th style="color: #202124;">TIPO GIORNATA</th>
                     <th id="totale" style="color: #202124;">TOTALE</th>
+                    <th id="ferie"  style="color: #202124;">Ferie</th>
                 </tr>
             </thead>
 
@@ -70,8 +69,8 @@
 
             <tfoot>
                 @if($totale != 0)
-                    <tr>
-                        <th style="background-color: #D2691E; color: white; text-align:center">TOTALE</th>
+                    <tr style="background-color: #D2691E; text-align:center !important">
+                        <th colspan="2">TOTALE</th>
                     </tr>
                     <tr>
                             <td></td>
@@ -85,6 +84,20 @@
 @include('layouts.footer')
 
 <script>
+
+        function updateUrl(){
+            var mese = $('#mesi_filtro').val();
+            var anno = $('#anni_filtro').val();
+
+            console.log(mese);
+            console.log(anno);
+            var excel = document.getElementById("excel_button");
+            excel.href = '/export-orario/' + mese + '/' + anno;
+
+            console.log(excel.href);
+
+        }
+
     $(document).ready( function () {
         var data = new Date();
         var month = data.getMonth();
@@ -119,7 +132,7 @@
     $(document).ready( function () {
           $('#orario_lavoro').DataTable({
             "searching": true,
-            "paging": true,
+            "paging": false,
             "info": true,
             "processing": true,
             "serverSide": true,
@@ -137,6 +150,7 @@
               { data: 'ore_fatte', name: 'ore_fatte'},
               { data: 'tipo_giornata', name: 'tipo_giornata'},
               { data: 'totale', name: 'totale', visible: false},
+              { data: 'ferie', name: 'ferie', visible: false},
             ],
             // Funzione di callback per il footer
             footerCallback: function(row, data, start, end, display) {
@@ -144,14 +158,18 @@
                 var api = this.api();
             if(data.length != 0){
             // Calcolo del totale
+            var ferie = api.column(7).data().reduce(function(a, b) {
+                //console.log(a);
+                    return a;
+            });
             var total = api.column(4).data().reduce(function(a, b) {
                 //console.log(b);
                 //console.log(a);
-                return parseInt(a) + parseInt(b);
+                return parseFloat(a) + parseFloat(b);
             });
 
             // Inserimento del totale nella cella del footer
-            $(api.column(0).footer()).text('Totale: ' + total);
+            $(api.column(0).footer()).text('Totale: ' + total + ' + ' + ' gg Ferie: ' + ferie);
             }else{
                 $(api.column(0).footer()).text('');
             }

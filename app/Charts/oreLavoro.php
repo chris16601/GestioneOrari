@@ -41,7 +41,7 @@ class oreLavoro
                 $ore_mese = tc_giornataLavorativa::whereMonth('data_giornata', '=', $mese)
                     ->whereYear('data_giornata', '=', date('Y'))
                     ->sum('ore_fatte');
-                $ore_per_mese[$mese - 1] = $ore_mese;
+                $ore_per_mese[$mese - 1] = round($ore_mese, 2);
             }
             //dd($ore_per_mese);
 

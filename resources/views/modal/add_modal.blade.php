@@ -87,14 +87,19 @@
         const minutes = Math.floor(ms / 60000);
         const hours = Math.floor(minutes / 60);
         const remainingMinutes = minutes % 60;
+        if(remainingMinutes > 0) {
+            var rMinutes = 5;
+        }else{
+            var rMinutes = 0;
+        }
 
         console.log('minuti:', minutes);
         console.log('ore', hours);
         console.log('munuti restanti', remainingMinutes);
 
-        $('#ore_fatte').val('Ora: ' + hours + ' Minuti: ' + remainingMinutes)
+        $('#ore_fatte').val('Ora: ' + hours + ' Minuti: ' + rMinutes)
 
-        $('#ore').val(hours + '.' + remainingMinutes);
+        $('#ore').val(hours + '.' + rMinutes);
     }
 </script>
 

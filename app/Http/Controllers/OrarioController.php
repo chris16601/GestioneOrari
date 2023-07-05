@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExcelExport;
+use App\Exports\OrarioExport;
 use App\Http\Controllers\Controller;
 use App\Models\tc_giornataLavorativa;
 use App\Models\tt_mesi;
@@ -9,13 +11,15 @@ use App\Models\tt_tipoGiornata;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrarioController extends Controller
 {
     public function index(){
         return view('page.ore', [
             'tipoGiornata' => tt_tipoGiornata::all(),
-            'totale' => tc_giornataLavorativa::sum('ore_fatte'),
+            'totale' => tc_giornataLavorativa::where('id_tipo_Giornata', '=', 2)->sum('ore_fatte'),
             'anni' => tc_giornataLavorativa::select(DB::raw('YEAR(data_giornata) as year'))
                                             ->distinct('year')
                                             ->get(),
@@ -51,7 +55,10 @@ class OrarioController extends Controller
         }
         return datatables($query)
                     ->editColumn('data', function ($data){
-                        return $data->data_giornata;
+                        $american_date = strtotime($data->data_giornata);
+                        $european_date = date('d-m-Y', $american_date);
+
+                        return $european_date;
                     })
                     ->editColumn('a_ora', function ($data){
                         return $data->a_ora;
@@ -70,6 +77,11 @@ class OrarioController extends Controller
                     })
                     ->addColumn('action', function ($data){
                         return $this->button($data);
+                    })
+                    ->editColumn('ferie', function ($data){
+                        $ferie = tc_giornataLavorativa::where('id_tipo_Giornata', '=', 1)->count();
+
+                        return $ferie;
                     })
                     ->toJson();
     }
@@ -148,5 +160,11 @@ class OrarioController extends Controller
         return redirect('/hour');
 
     }
+
+    public function exportExcel($mese, $anno) {
+        return Excel::download(new OrarioExport($mese, $anno), 'prova.xlsx');
+
+    }
+
 
 }
